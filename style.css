@@ -1,0 +1,171 @@
+/*
+Theme Name: Cal Cooking Club
+Theme URI: http://cooking.berkeley.edu
+Description: Cal Cooking Club custom theme
+Author: Jeff Zych
+Version: 1
+*/
+
+/* Mixins & constants */
+body {
+  background-color: white;
+  min-width: 1085px;
+}
+
+#content a, #sidebar a {
+  color: #010066;
+}
+#content a:hover, #sidebar a:hover {
+  background-color: #010066;
+  color: white;
+  text-decoration: none;
+}
+
+h1 {
+  margin-top: 0.75em;
+}
+
+/* Main site navigation */
+#nav {
+  border-bottom: 1px dotted #444444;
+  /* Moved height to li because of weird rendering bug that had li height=0 */
+}
+#nav ul {
+  height: 100%;
+}
+#nav ul li {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  min-width: 120px;
+  padding-right: 20px;
+}
+#nav ul li a {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #999999;
+  display: inline-block;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 18pt;
+  font-weight: bold;
+  height: 80px;
+  letter-spacing: 2pt;
+  padding-top: 47px;
+  text-decoration: none;
+  width: 100%;
+}
+#nav ul li a:hover, #nav ul li a.current {
+  color: #010066;
+}
+#nav ul li a#logo {
+  height: auto;
+  padding-top: 0;
+}
+
+/* Main site content */
+#content {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #444444;
+  display: inline-block;
+  min-height: 560px;
+  padding: 0 20px 2em 140px;
+  width: 720px;
+}
+
+/* Sidebar to hold events */
+#sidebar {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  height: auto;
+  margin-top: 2em;
+  padding-bottom: 1em;
+  padding-left: 30px;
+  vertical-align: top;
+  width: 360px;
+}
+#sidebar a {
+  display: inline-block;
+  font-family: Verdana, sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+}
+#sidebar h3 {
+  color: #444444;
+}
+#sidebar iframe {
+  height: 400px;
+}
+
+/* Page specific styles */
+#calendar {
+  background-color: white;
+  min-width: inherit;
+}
+#calendar iframe {
+  height: 100%;
+  width: 100%;
+}
+
+.important {
+  display: inline-block;
+  font-family: Verdana, sans-serif;
+  font-size: 2em;
+  margin-bottom: 0.5em;
+}
+
+.home_image {
+  width: 480px;
+}
+
+/* Officers */
+#officers #content img {
+  display: inline-block;
+}
+#officers #content ul {
+  display: inline-block;
+  list-style: none;
+  vertical-align: top;
+}
+#officers #content ul li {
+  padding-bottom: 1em;
+}
+
+.officer_name {
+  color: #444444;
+  margin-top: 0;
+}
+
+.email {
+  font-size: 12pt;
+  font-weight: normal;
+}
+
+.label {
+  color: black;
+  font-weight: bold;
+}
+
+.thumb, .label {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  padding-right: 20px;
+  text-align: right;
+  width: 120px;
+}
+
+.label {
+  vertical-align: top;
+}
+
+.title, .text {
+  display: inline-block;
+  width: 360px;
+}
