@@ -2,13 +2,13 @@
 /**
  * The Header for our theme.
  *
- * Displays all of the <head> section and everything up till <div id="main">
+ * Displays all of the <head> section and everything up till <div id="content">
  */
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
   <head>
-    <meta charset="<?php bloginfo( 'charset' ); ?>" />
-    <title>Cal Cooking Club</title>
+    <meta charset="<?php bloginfo('charset'); ?>" />
+    <title><?php bloginfo('name');?><?php wp_title('–'); ?></title>
     <meta content="Cal Cooking Club: Information on events, recipes, officers, and more." name="description">
     <link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo('template_directory'); ?>/stylesheets/reset.css">
     <link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo('template_directory'); ?>/stylesheets/jquery.lightbox.css">
@@ -27,9 +27,10 @@
         })();
       //]]>
     </script>
+    <?php wp_head(); ?>
   </head>
 
-<body <?php body_class(); ?>>
+<body id="<?php echo trim(wp_title('', false)); ?>" <?php body_class(); ?>>
   <div id="nav">
     <ul>
       <li>
