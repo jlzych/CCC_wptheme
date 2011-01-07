@@ -31,7 +31,8 @@
       '_builtin' => false,
       'capability_type' => 'post',
       'hierarchical' => false,
-      'rewrite' => array('slug' => 'officer')
+      'rewrite' => array('slug' => 'officer'),
+      'supports' => array('title', 'page-attributes')
     ));
     
     // Custom columns for dashboard view
