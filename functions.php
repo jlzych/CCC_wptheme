@@ -145,6 +145,19 @@
     }
   }
 
+  function ccc_admin_officer_order($wp_query) {
+    global $officer_post_type;
+    if (is_admin()) {
+      $post_type = $wp_query->query['post_type'];
+      if ($post_type == $officer_post_type) {
+        $wp_query->set('orderby', 'menu_order');
+        $wp_query->set('order', 'ASC');
+      }
+    }
+  }
+  
+  add_filter('pre_get_posts', 'ccc_admin_officer_order');
+
   function ccc_admin_scripts() {
     wp_enqueue_script('media-upload');
     wp_enqueue_script('thickbox');
