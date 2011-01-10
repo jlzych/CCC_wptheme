@@ -11,12 +11,18 @@
   $posts = new WP_Query(array('post_type' => $officer_post_type));
   while($posts->have_posts()) :
     $posts->the_post();
+    $post = $posts->post;
     $fields = get_post_custom();
 ?>
 
 <div class="officer vcard">
   <div class="title_container">
-    <div class="thumb"><!-- TODO: placeholder until pics are in place --></div>
+    <div class="thumb">
+      <?php
+        $link = ccc_get_officer_picture($post->ID);
+        echo $link;
+      ?>
+    </div>
     <div class="title">
       <h2><?php echo the_title('', '', false); ?></h2>
       <h4 class="officer_name fn">

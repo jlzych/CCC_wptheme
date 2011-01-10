@@ -64,12 +64,13 @@
 
   function ccc_officer_meta_fields() {
     return array(
-      'name' => '',
-      'email' => '',
-      'year' => '',
-      'what_i_do' => '',
-      'interests' => '',
-      'favorite_foods' => ''
+      'picture' => array('type' => 'media_upload'),
+      'name' => array('type' => 'text'),
+      'email' => array('type' => 'text'),
+      'year' => array('type' => 'text'),
+      'what_i_do' => array('type' => 'textarea'),
+      'interests' => array('type' => 'textarea'),
+      'favorite_foods' => array('type' => 'textarea')
     );
   }
   
@@ -84,10 +85,33 @@
     foreach ($meta_fields as $key => $value) {  
       $id = $officer_meta_name . '_' . $key;
       
-      echo '<p>';
-      echo '<label for="' . $id . '" style="display: inline-block; padding-right: 1em; text-align: right; width: 20%;">' . ucwords(str_replace('_', ' ', $key)) . '</label>';
-      echo '<input type="text" name="'. $id . '" id="' . $id . '" value="' . get_post_meta($post->ID, $id, true) . '" style="width: 75%;" />';
-      echo '</p>';
+      echo '<div style="margin-bottom: 1em;">';
+      echo '<label for="' . $id . '" style="display: inline-block; padding: .5em 1em 0 0; text-align: right; vertical-align: top; width: 20%;">' . ucwords(str_replace('_', ' ', $key)) . '</label>';
+      $atts = ' name="' . $id . '" id="' . $id . '" style="width: 75%;" ';
+
+      switch ($value['type']) {
+        case 'media_upload':
+          echo '<div style="display: inline-block; width: 75%;">';
+          $src = ccc_get_officer_picture($post->ID, true);
+          $display_val = ($src ? 'inherit' : 'none');
+          echo '<img id="ccc_uploaded_image" src="' . $src . '" style="display: ' . $display_val . ';" /><br />';
+          echo '<a href="#" id="' . $id . '">Upload image</a>';
+          echo '</div>';
+          break;
+
+        case 'text':
+          echo '<input type="text" name="'. $id . '" id="' . $id . '" value="' . get_post_meta($post->ID, $id, true) . '" style="width: 75%;" />';
+          break;
+          
+        case 'textarea':
+          echo '<textarea ' . $atts . '>' . get_post_meta($post->ID, $id, true) . '</textarea>';
+          break;
+        
+        default:
+          echo 'default';
+          break;
+      }
+      echo '</div>';
     }
   }
   
@@ -120,6 +144,40 @@
     }
   }
 
+  function ccc_admin_scripts() {
+    wp_enqueue_script('media-upload');
+    wp_enqueue_script('thickbox');
+    wp_register_script('officer-upload', get_bloginfo('template_url') . '/javascripts/admin_officer_upload.js', array('jquery','media-upload','thickbox'));
+    wp_enqueue_script('officer-upload');
+  }
+  
+  function ccc_admin_styles() {
+    wp_enqueue_style('thickbox');
+  }
+  add_action('admin_print_scripts', 'ccc_admin_scripts');
+  add_action('admin_print_styles', 'ccc_admin_styles');
+
   if (function_exists('register_sidebar'))
     register_sidebar();
+  
+  /* Helper functions */
+  function ccc_get_officer_picture($id, $src = false) {
+    $picture = get_posts(array(
+      'numberposts' => 1,
+      'post_type' => 'attachment',
+      'post_parent' => $id
+    ));
+    
+    $link = '';
+    if ($src)
+      $link = wp_get_attachment_image_src($picture[0]->ID, array(100, 100));
+    else
+      $link = wp_get_attachment_link($picture[0]->ID, array(100, 100));
+      $link = $link[0];
+      
+    if ($link != 'Missing Attachment')
+      return $link;
+    else
+      return NULL;
+  }
 ?>
