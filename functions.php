@@ -25,7 +25,13 @@
     // Register custom Officer type
     register_post_type($officer_post_type, array(
       'label' => __('Officers'),
-      'singular_label' => __('Officer'),
+      'labels' => array(
+        'singular_name' => __('Officer'),
+        'add_new_item' => __('Add New Officer'),
+        'edit_item' => __('Edit Officer'),
+        'new_item' => __('New Officer'),
+        'view_item' => __('View Officer')
+      ),
       'public' => true,
       'show_ui' => true,
       '_builtin' => false,
