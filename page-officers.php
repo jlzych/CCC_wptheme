@@ -8,7 +8,12 @@
 <h1><?php echo ucwords(wp_title(null, false)); ?></h1>
 <?php
   global $officer_meta_name, $officer_post_type;
-  $posts = new WP_Query(array('post_type' => $officer_post_type));
+  $posts = new WP_Query(array(
+    'post_type' => $officer_post_type,
+    'posts_per_page' => -1,
+    'orderby' => 'menu_order',
+    'order' => 'ASC'
+  ));
   while($posts->have_posts()) :
     $posts->the_post();
     $post = $posts->post;
@@ -19,8 +24,7 @@
   <div class="title_container">
     <div class="thumb">
       <?php
-        $link = ccc_get_officer_picture($post->ID);
-        echo $link;
+        echo ccc_get_officer_picture($post->ID);
       ?>
     </div>
     <div class="title">

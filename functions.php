@@ -94,8 +94,9 @@
           echo '<div style="display: inline-block; width: 75%;">';
           $src = ccc_get_officer_picture($post->ID, true);
           $display_val = ($src ? 'inherit' : 'none');
+          echo '<a href="#" id="' . $id . '">';
           echo '<img id="ccc_uploaded_image" src="' . $src . '" style="display: ' . $display_val . ';" /><br />';
-          echo '<a href="#" id="' . $id . '">Upload image</a>';
+          echo 'Upload image</a>';
           echo '</div>';
           break;
 
@@ -169,12 +170,13 @@
     ));
     
     $link = '';
-    if ($src)
+    if ($src) {
       $link = wp_get_attachment_image_src($picture[0]->ID, array(100, 100));
+      $link = $link[0];
+    }
     else
       $link = wp_get_attachment_link($picture[0]->ID, array(100, 100));
-      $link = $link[0];
-      
+    
     if ($link != 'Missing Attachment')
       return $link;
     else
