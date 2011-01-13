@@ -29,9 +29,9 @@
     </div>
     <div class="title">
       <h2><?php echo the_title('', '', false); ?></h2>
-      <h4 class="officer_name fn">
-        <?php echo $fields[$officer_meta_name . '_name'][0] . " - "; ?>
-        <a class="email" href="mailto:<?php echo $fields[$officer_meta_name . '_email'][0]; ?>" title="Email"><?php echo $fields[$officer_meta_name . '_email'][0]; ?></a>
+      <h4 class="officer_name">
+        <span class="fn"><?php echo $fields[$officer_meta_name . '_name'][0]; ?></span> - 
+        <a class="email" href="mailto:<?php echo $fields[$officer_meta_name . '_email'][0]; ?>" title="Email"><?php echo str_replace('@', ' [at] ', $fields[$officer_meta_name . '_email'][0]); ?></a>
       </h4>
     </div>
     <ul>
