@@ -54,13 +54,12 @@
 
 <?php
 function filter_meta_fields($field) {
+  global $officer_meta_name;
   // Special fields that are part of the header, not to be reprinted
   $blacklist = array(
     $officer_meta_name . '_name',
     $officer_meta_name . '_email'
   );
-  
-  global $officer_meta_name;
   
   if(strstr($field, $officer_meta_name) !== false && !in_array($field, $blacklist)) {
     return true;
