@@ -6,10 +6,17 @@ Author: Jeff Zych
 Version: 1
 */
 
-/* Mixins & constants */
+/* Grid information:
+  Width: 1080px
+  Columns: 9
+  Column width: 120px
+  Unit width: 50px
+  Gutter: 10px
+*/
 body {
   background-color: white;
   min-width: 1085px;
+  padding-left: 10px;
 }
 
 #content a, #sidebar a {
@@ -26,10 +33,6 @@ h1 {
 }
 
 /* Main site navigation */
-#nav {
-  border-bottom: 1px dotted #444444;
-  /* Moved height to li because of weird rendering bug that had li height=0 */
-}
 #nav ul {
   height: 100%;
 }
@@ -39,7 +42,7 @@ h1 {
   box-sizing: border-box;
   display: inline-block;
   min-width: 120px;
-  padding-right: 20px;
+  padding-right: 10px;
 }
 #nav ul li a {
   -moz-box-sizing: border-box;
@@ -59,9 +62,21 @@ h1 {
 #nav ul li a:hover, #nav ul li.current_page_item a {
   color: #010066;
 }
-#nav ul li a#logo {
-  height: auto;
-  padding-top: 0;
+#nav ul li#logo {
+  text-align: center;
+  width: 230px; /* 230 because body has the 10px gutter applied to it already */
+}
+
+#nav ul li#logo a {
+  -moz-border-radius-bottomleft: 10px;
+  -moz-border-radius-bottomright: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background: #036;
+  background: -moz-linear-gradient(top, #036, #014);
+  background: -webkit-gradient(linear, left top, left bottom, from(#036), to(#014));
+  padding-top: 12px;
+  text-indent: -20px;
 }
 
 /* Main site content */
@@ -72,7 +87,7 @@ h1 {
   color: #444444;
   display: inline-block;
   min-height: 560px;
-  padding: 0 20px 2em 140px;
+  padding: 0 20px 2em 60px;
   width: 720px;
 }
 
@@ -98,8 +113,8 @@ h1 {
 #sidebar h3 {
   color: #444444;
 }
-#sidebar iframe {
-  height: 400px;
+#sidebar ul {
+  list-style: none;
 }
 
 /* Page specific styles */
@@ -158,7 +173,7 @@ h1 {
   display: inline-block;
   padding-right: 20px;
   text-align: right;
-  width: 120px;
+  width: 170px;
 }
 
 .label {
