@@ -29,5 +29,6 @@
 			</li>
 
 		<?php endif; // end primary widget area ?>
+		  <li><a href="<?php bloginfo('template_directory'); ?>/calendar.html" target="_blank">View All Events &gt;&gt;</a></li>
 			</ul>
 		</div><!-- #sidebar -->

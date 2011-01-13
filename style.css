@@ -117,6 +117,13 @@ h1 {
   list-style: none;
 }
 
+#footer {
+  border-top: 1px dotted #444;
+  font-size: .75em;
+  margin-top: 5em;
+  text-align: center;
+}
+
 /* Page specific styles */
 #calendar {
   background-color: white;
