@@ -17,7 +17,13 @@
     <script type='text/javascript'>
       //<![CDATA[
         $(document).ready(function() {
-          $('#content a:has(img):not(.no_lb)').lightBox();
+          $('#content a:has(img):not(.no_lb)').lightBox({
+              imageLoading: "<?php bloginfo('template_directory'); ?>/images/lightbox-ico-loading.gif",
+              imageBtnClose: "<?php bloginfo('template_directory'); ?>/images/lightbox-btn-close.gif",
+              imageBtnPrev: "<?php bloginfo('template_directory'); ?>/images/lightbox-btn-prev.gif",
+              imageBtnNext: "<?php bloginfo('template_directory'); ?>/images/lightbox-btn-next.gif",
+              imageBlank: "<?php bloginfo('template_directory'); ?>/images/lightbox-blank.gif"
+            });
         });
       //]]>
     </script>
