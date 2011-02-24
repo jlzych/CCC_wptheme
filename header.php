@@ -33,9 +33,9 @@
 <body id="<?php echo trim(wp_title('', false)); ?>" <?php body_class(); ?>>
   <div id="nav">
     <ul>
-      <li>
-        <a href="index.php" id="logo">
-          <img alt="CCC" src="<?php bloginfo('template_directory') ?>/images/ccc.120.png">
+      <li id="logo">
+        <a href="index.php">
+          <img alt="CCC" src="<?php bloginfo('template_directory') ?>/images/ccc_white.png">
         </a>
       </li>
   		<?php /* Our navigation menu.  If one isn't filled out, wp_nav_menu falls back to wp_page_menu.  The menu assiged to the primary position is the one used.  If none is assigned, the menu with the lowest ID is used.  */ ?>

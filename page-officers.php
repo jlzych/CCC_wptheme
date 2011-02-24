@@ -8,20 +8,30 @@
 <h1><?php echo ucwords(wp_title(null, false)); ?></h1>
 <?php
   global $officer_meta_name, $officer_post_type;
-  $posts = new WP_Query(array('post_type' => $officer_post_type));
+  $posts = new WP_Query(array(
+    'post_type' => $officer_post_type,
+    'posts_per_page' => -1,
+    'orderby' => 'menu_order',
+    'order' => 'ASC'
+  ));
   while($posts->have_posts()) :
     $posts->the_post();
+    $post = $posts->post;
     $fields = get_post_custom();
 ?>
 
 <div class="officer vcard">
   <div class="title_container">
-    <div class="thumb"><!-- TODO: placeholder until pics are in place --></div>
+    <div class="thumb">
+      <?php
+        echo ccc_get_officer_picture($post->ID);
+      ?>
+    </div>
     <div class="title">
       <h2><?php echo the_title('', '', false); ?></h2>
-      <h4 class="officer_name fn">
-        <?php echo $fields[$officer_meta_name . '_name'][0] . " - "; ?>
-        <a class="email" href="mailto:<?php echo $fields[$officer_meta_name . '_email'][0]; ?>" title="Email"><?php echo $fields[$officer_meta_name . '_email'][0]; ?></a>
+      <h4 class="officer_name">
+        <span class="fn"><?php echo $fields[$officer_meta_name . '_name'][0]; ?></span> - 
+        <a class="email" href="mailto:<?php echo $fields[$officer_meta_name . '_email'][0]; ?>" title="Email"><?php echo str_replace('@', ' [at] ', $fields[$officer_meta_name . '_email'][0]); ?></a>
       </h4>
     </div>
     <ul>
@@ -44,13 +54,12 @@
 
 <?php
 function filter_meta_fields($field) {
+  global $officer_meta_name;
   // Special fields that are part of the header, not to be reprinted
   $blacklist = array(
     $officer_meta_name . '_name',
     $officer_meta_name . '_email'
   );
-  
-  global $officer_meta_name;
   
   if(strstr($field, $officer_meta_name) !== false && !in_array($field, $blacklist)) {
     return true;

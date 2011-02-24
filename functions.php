@@ -2,6 +2,9 @@
   $officer_post_type = 'ccc_officer';
   $officer_meta_name = $officer_post_type . '_meta';
   $nonce_id = $officer_post_type . '_nonce';
+  
+  $recipe_post_type = 'ccc_recipe';
+  $recipe_nonce_id = $recipe_post_type . '_nonce';
 
   add_action('init', 'ccc_init');
   add_action('admin_init', 'ccc_admin_init');
@@ -22,6 +25,8 @@
   
   function ccc_init() {
     global $officer_post_type;
+    global $recipe_post_type;
+    
     // Register custom Officer type
     register_post_type($officer_post_type, array(
       'label' => __('Officers'),
@@ -35,9 +40,21 @@
       'supports' => array('title', 'page-attributes')
     ));
     
-    // Custom columns for dashboard view
+    // Custom columns for officer dashboard view
     add_action('manage_posts_custom_column', 'ccc_officer_custom_columns');
     add_filter('manage_edit-' . $officer_post_type . '_columns', 'ccc_officer_columns');
+    
+    // Register custom Recipe type
+    register_post_type($recipe_post_type, array(
+      'label' => __('Recipes'),
+      'singular_label' => __('Recipe'),
+      'public' => true,
+      'show_ui' => true,
+      '_builtin' => false,
+      'capability_type' => 'post',
+      'hierarchical' => false,
+      'rewrite' => array('slug' => 'recipe')
+    ));
   }
 
   function ccc_officer_columns($columns) {
@@ -64,12 +81,13 @@
 
   function ccc_officer_meta_fields() {
     return array(
-      'name' => '',
-      'email' => '',
-      'year' => '',
-      'what_i_do' => '',
-      'interests' => '',
-      'favorite_foods' => ''
+      'picture' => array('type' => 'media_upload'),
+      'name' => array('type' => 'text'),
+      'email' => array('type' => 'text'),
+      'year' => array('type' => 'text'),
+      'what_i_do' => array('type' => 'textarea'),
+      'interests' => array('type' => 'textarea'),
+      'favorite_foods' => array('type' => 'textarea')
     );
   }
   
@@ -86,7 +104,21 @@
       
       echo '<p>';
       echo '<label for="' . $id . '" style="display: inline-block; padding-right: 1em; text-align: right; width: 20%;">' . ucwords(str_replace('_', ' ', $key)) . '</label>';
-      echo '<input type="text" name="'. $id . '" id="' . $id . '" value="' . get_post_meta($post->ID, $id, true) . '" style="width: 75%;" />';
+      $atts = ' name="' . $id . '" id="' . $id . '" style="width: 75%;" ';
+      
+      switch ($value['type']) {
+        case 'media_upload':
+          echo '<a href="#" id="' . $id . '">Upload image</a>';
+          break;
+
+        case 'text':
+          echo '<input type="text" name="'. $id . '" id="' . $id . '" value="' . get_post_meta($post->ID, $id, true) . '" style="width: 75%;" />';
+          break;
+          
+        case 'textarea':
+          echo '<textarea ' . $atts . '>' . get_post_meta($post->ID, $id, true) . '</textarea>';
+          break;
+      }
       echo '</p>';
     }
   }
@@ -119,6 +151,19 @@
       }
     }
   }
+
+  function ccc_admin_scripts() {
+    wp_enqueue_script('media-upload');
+    wp_enqueue_script('thickbox');
+    wp_register_script('officer-upload', get_bloginfo('template_url') . '/javascripts/admin_officer_upload.js', array('jquery','media-upload','thickbox'));
+    wp_enqueue_script('officer-upload');
+  }
+  
+  function ccc_admin_styles() {
+    wp_enqueue_style('thickbox');
+  }
+  add_action('admin_print_scripts', 'ccc_admin_scripts');
+  add_action('admin_print_styles', 'ccc_admin_styles');
 
   if (function_exists('register_sidebar'))
     register_sidebar();
