@@ -4,7 +4,6 @@
   $nonce_id = $officer_post_type . '_nonce';
   
   $recipe_post_type = 'ccc_recipe';
-  $recipe_nonce_id = $recipe_post_type . '_nonce';
 
   add_action('init', 'ccc_init');
   add_action('admin_init', 'ccc_admin_init');
@@ -30,7 +29,13 @@
     // Register custom Officer type
     register_post_type($officer_post_type, array(
       'label' => __('Officers'),
-      'singular_label' => __('Officer'),
+      'labels' => array(
+        'singular_name' => __('Officer'),
+        'add_new_item' => __('Add New Officer'),
+        'edit_item' => __('Edit Officer'),
+        'new_item' => __('New Officer'),
+        'view_item' => __('View Officer')
+      ),
       'public' => true,
       'show_ui' => true,
       '_builtin' => false,
@@ -152,6 +157,19 @@
     }
   }
 
+  function ccc_admin_officer_order($wp_query) {
+    global $officer_post_type;
+    if (is_admin()) {
+      $post_type = $wp_query->query['post_type'];
+      if ($post_type == $officer_post_type) {
+        $wp_query->set('orderby', 'menu_order');
+        $wp_query->set('order', 'ASC');
+      }
+    }
+  }
+  
+  add_filter('pre_get_posts', 'ccc_admin_officer_order');
+
   function ccc_admin_scripts() {
     wp_enqueue_script('media-upload');
     wp_enqueue_script('thickbox');
@@ -167,4 +185,26 @@
 
   if (function_exists('register_sidebar'))
     register_sidebar();
+  
+  /* Helper functions */
+  function ccc_get_officer_picture($id, $src = false) {
+    $picture = get_posts(array(
+      'numberposts' => 1,
+      'post_type' => 'attachment',
+      'post_parent' => $id
+    ));
+    
+    $link = '';
+    if ($src) {
+      $link = wp_get_attachment_image_src($picture[0]->ID, array(100, 100));
+      $link = $link[0];
+    }
+    else
+      $link = wp_get_attachment_link($picture[0]->ID, array(100, 100));
+    
+    if ($link != 'Missing Attachment')
+      return $link;
+    else
+      return NULL;
+  }
 ?>
