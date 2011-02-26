@@ -11,7 +11,7 @@ get_header(); ?>
   $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
   $wp_query = new WP_Query(array(
     'post_type' => $recipe_post_type,
-    'posts_per_page' => 2,
+    'posts_per_page' => 10,
     'paged' => $paged
   ));
   while($wp_query->have_posts()) :
